@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script>
+	var myApp = angular.module("myApp", []);
+	myApp
+			.controller(
+					'myEmpController',
+					function($scope, $http) {
+						$scope.registerEmployee = function(employeeObject) {
+							
+							var myJSONObject = JSON.stringify(employeeObject);
+							alert(myJSONObject);
+							$http(
+									{
+										method : 'POST',
+										url : 'http://localhost:8888/EMS_WEBSERVICES_EXAMPLE/rest/empcontroller/saveEmployee1/',
+										data : myJSONObject
+									}).success(
+									function(data, status, headers, config) {
+										$scope.message = data;
+										alert("Success Message:" +$scope.message);
+									}).error(
+									function(data, status, headers, config) {
+										// called asynchronously if an error occurs
+										// or server returns response with an error status.
+									});
+						};
+					});
+</script>
+</head>
+<body data-ng-app="myApp" data-ng-controller="myEmpController">
+	<table border="1" align="center">
+		<tr>
+			<td>Employee Number</td>
+			<td><input type="number" name="empNumber"
+				data-ng-model="employeeObject.empNumber" required="required" /></td>
+		</tr>
+		<tr>
+			<td>Employee Name</td>
+			<td><input type="text" name="empName"
+				data-ng-model="employeeObject.empName" required="required" /></td>
+		</tr>
+		<tr>
+			<td>Employee Job</td>
+			<td><input type="text" name="empJob"
+				data-ng-model="employeeObject.empJob" required="required" /></td>
+		</tr>
+		<tr>
+			<td>Employee Boss Code</td>
+			<td><input type="number" name="empBossCode"
+				data-ng-model="employeeObject.empBossCode" required="required" /></td>
+		</tr>
+		<tr>
+			<td>Employee Date Of Join</td>
+			<td><input type="date" name="empDoj"
+				data-ng-model="employeeObject.empDoj" required="required" /></td>
+		</tr>
+		<tr>
+			<td>Employee Salary</td>
+			<td><input type="number" name="empSalary"
+				data-ng-model="employeeObject.empSalary" required="required" /></td>
+		</tr>
+		<tr>
+			<td>Employee Commission</td>
+			<td><input type="number" name="empCommempCommission"
+				data-ng-model="employeeObject.empCommission" required="required" /></td>
+		</tr>
+		<tr>
+			<td>Employee Department Number</td>
+			<td><input type="number" name="empDepartmentNumber"
+				data-ng-model="employeeObject.empDepartmentNumber"
+				required="required" /></td>
+		</tr>
+
+	</table>
+	<button data-ng-click="registerEmployee (employeeObject)">Save
+		Employee</button>
+</body>
+</html>
